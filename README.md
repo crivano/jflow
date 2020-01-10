@@ -9,6 +9,13 @@ Main goals are:
 - To have a easily readable codebase
 - To support persistence on different databases
 
+Web Editor
+====
+
+![JFlow](https://user-images.githubusercontent.com/4137623/72182221-cbde2d80-33c9-11ea-93ad-61e223398cf0.png)
+
+A workflow process definition is basically an array of task definitions, and it can be easily edited using a web application. An example of an web app that edits process definitions can be seen on this [live demo](https://crivano.github.io/jflow/front-end/angularjs/index.html) (in Portuguese). It's source code is available at the `front-end` directory.
+
 Example / Usage
 ====
 
@@ -76,13 +83,6 @@ For the example above, the `dot` variable will contain something like this:
 Enclose it between a `Digraph G {` and a `}`, submit to a [GraphViz Engine](https://dreampuf.github.io/GraphvizOnline/#digraph%20G%20%7B%0A%0A%22start%22%5Bshape%3D%22oval%22%5D%5Bcolor%3D%22black%22%5D%5Bfontcolor%3D%22black%22%5D%5Blabel%3D%3CStart%3E%5D%3B%0A%22start%22-%3E%221%22%3B%0A%22finish%22%5Bshape%3D%22oval%22%5D%5Bcolor%3D%22black%22%5D%5Bfontcolor%3D%22black%22%5D%5Blabel%3D%3CFinish%3E%5D%3B%0A%221%22%5Bshape%3D%22rectangle%22%5D%5Bcolor%3D%22blue%22%5D%5Bfontcolor%3D%22blue%22%5D%5Blabel%3D%3CForm%3E%5D%3B%0A%221%22-%3E%22finish%22%3B%0A%0A%7D) and you will end up with a nice graph:
 
 ![Graphviz_Online](https://user-images.githubusercontent.com/4137623/72162148-2d89a200-33a0-11ea-906b-5a94d4b3d2c2.png)
-
-Web Editor
-====
-
-![JFlow](https://user-images.githubusercontent.com/4137623/72182221-cbde2d80-33c9-11ea-93ad-61e223398cf0.png)
-
-A workflow process definition is basically an array of task definitions, and it can be easily edited using a web application. An example of an web app that edits process definitions can be seen [here](https://crivano.github.io/jflow/front-end/angularjs/index.html) (in Portuguese). It's source code is available at the `front-end` directory.
 
 Development
 ====
