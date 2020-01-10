@@ -1,5 +1,8 @@
 JFlow
 ====
+
+![](https://github.com/crivano/jflow/workflows/Java%20CI/badge.svg)
+
 JFlow is a simple open-source library for defining and running workflows in java. It is specifically designed to be easily included in other applications.
 
 Main goals are:
