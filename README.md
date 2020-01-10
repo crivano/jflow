@@ -1,6 +1,6 @@
-Project JFlow
+JFlow
 ====
-JLogic is a simple open-source library for defining and running workflows in java. It is specifically designed to be easily included in other applications.
+JFlow is a simple open-source library for defining and running workflows in java. It is specifically designed to be easily included in other applications.
 
 Main goals are:
 - To have zero dependencies
