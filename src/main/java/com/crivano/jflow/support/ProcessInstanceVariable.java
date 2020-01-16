@@ -4,9 +4,9 @@ import java.util.Date;
 
 public interface ProcessInstanceVariable {
 
-	String getId();
+	String getIdentifier();
 
-	void setId(String id);
+	void setIdentifier(String identifier);
 
 	String getString();
 

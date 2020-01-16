@@ -10,12 +10,11 @@ import com.crivano.jflow.model.TaskKind;
 
 public class TaskDefinitionSupport implements TaskDefinition {
 
-	public TaskDefinitionSupport(String id, String name, TaskKind kind, String title, String after,
+	public TaskDefinitionSupport(String id, TaskKind kind, String title, String after,
 			ResponsibleKind responsibleKind, List<TaskDefinitionVariable> variable, List<TaskDefinitionDetour> detour,
 			String subject, String text) {
 		super();
 		this.id = id;
-		this.name = name;
 		this.kind = kind;
 		this.title = title;
 		this.after = after;
@@ -31,8 +30,6 @@ public class TaskDefinitionSupport implements TaskDefinition {
 	}
 
 	String id;
-
-	String name;
 
 	private TaskKind kind;
 
@@ -51,13 +48,8 @@ public class TaskDefinitionSupport implements TaskDefinition {
 	private String text;
 
 	@Override
-	public String getId() {
+	public String getIdentifier() {
 		return id;
-	}
-
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	@Override

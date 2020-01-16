@@ -37,19 +37,19 @@ public class DecisionTest {
 		pd = new ProcessDefinitionSupport();
 
 		// Create the task definition
-		td = new TaskDefinitionSupport("1", "test", TaskKindSupport.DECISION, "Decision", null,
+		td = new TaskDefinitionSupport("1", TaskKindSupport.DECISION, "Decision", null,
 				ResponsibleKindSupport.REGISTRANT, null, new ArrayList<>(), null, null);
 		td.getDetour().add(new DetourSupport("D1", "2", "d =='2'"));
 		td.getDetour().add(new DetourSupport("D2", "3", "d =='3'"));
 		pd.getTaskDefinition().add(td);
 
 		// Create 2 form task definitions
-		td2 = new TaskDefinitionSupport("2", "test", TaskKindSupport.FORM, "Form", null,
-				ResponsibleKindSupport.REGISTRANT, null, null, null, null);
+		td2 = new TaskDefinitionSupport("2", TaskKindSupport.FORM, "Form", null, ResponsibleKindSupport.REGISTRANT,
+				null, null, null, null);
 		pd.getTaskDefinition().add(td2);
 
-		td3 = new TaskDefinitionSupport("3", "test", TaskKindSupport.FORM, "Form", null,
-				ResponsibleKindSupport.REGISTRANT, null, null, null, null);
+		td3 = new TaskDefinitionSupport("3", TaskKindSupport.FORM, "Form", null, ResponsibleKindSupport.REGISTRANT,
+				null, null, null, null);
 		pd.getTaskDefinition().add(td3);
 
 		// Create the process instance without responsible support
@@ -69,27 +69,30 @@ public class DecisionTest {
 
 		// Decision should detour to the form with id == "2"
 		variable.put("d", "2");
-		engine.start(pi, pd, variable);
+		pi.setVariable(variable);
+		engine.start(pi);
 		assertEquals(pi.getStatus(), ProcessInstanceStatus.PAUSED);
-		assertEquals("2", pi.getCurrentTaskDefinition().getId());
+		assertEquals("2", pi.getCurrentTaskDefinition().getIdentifier());
 
 		// Decision should detour to the form with id == "3"
 		variable.put("d", "3");
-		engine.start(pi, pd, variable);
+		pi.setVariable(variable);
+		engine.start(pi);
 		assertEquals(pi.getStatus(), ProcessInstanceStatus.PAUSED);
-		assertEquals("3", pi.getCurrentTaskDefinition().getId());
+		assertEquals("3", pi.getCurrentTaskDefinition().getIdentifier());
 
 		// There is no detour that would evaluate to true, therefore the engine should
 		// pause at the decision and wait for an event to continue
 		variable.put("d", null);
-		engine.start(pi, pd, variable);
+		pi.setVariable(variable);
+		engine.start(pi);
 		assertEquals(pi.getStatus(), ProcessInstanceStatus.PAUSED);
-		assertEquals("1", pi.getCurrentTaskDefinition().getId());
+		assertEquals("1", pi.getCurrentTaskDefinition().getIdentifier());
 
 		variable.put("d", "2");
 		engine.resume(TaskDecision.getEvent(td, pi), null, null);
 		assertEquals(pi.getStatus(), ProcessInstanceStatus.PAUSED);
-		assertEquals("2", pi.getCurrentTaskDefinition().getId());
+		assertEquals("2", pi.getCurrentTaskDefinition().getIdentifier());
 	}
 
 }

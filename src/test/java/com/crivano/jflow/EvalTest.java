@@ -38,7 +38,7 @@ public class EvalTest {
 		text += "if (result == \"pause\") return new TaskResult(TaskResultKind.PAUSE, null, null, \"event\", null);";
 
 		// Create the task definition
-		td = new TaskDefinitionSupport("1", "test", TaskKindSupport.EVAL, "Eval", null, null, null, null, null, text);
+		td = new TaskDefinitionSupport("1", TaskKindSupport.EVAL, "Eval", null, null, null, null, null, text);
 		pd.getTaskDefinition().add(td);
 
 		// Create the process instance without responsible support
@@ -56,8 +56,9 @@ public class EvalTest {
 	@Test
 	public void singleEvalTask() throws Exception {
 		variable.put("result", null);
+		pi.setVariable(variable);
 
-		engine.start(pi, pd, variable);
+		engine.start(pi);
 
 		assertEquals("OK", variable.get("test"));
 
@@ -67,8 +68,9 @@ public class EvalTest {
 	@Test
 	public void singleEvalTaskReturningResult() throws Exception {
 		variable.put("result", "pause");
+		pi.setVariable(variable);
 
-		engine.start(pi, pd, variable);
+		engine.start(pi);
 
 		assertEquals("OK", variable.get("test"));
 

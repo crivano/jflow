@@ -19,7 +19,7 @@ public class TaskDecision implements PausableTask {
 			return new TaskResult(TaskResultKind.DONE, null, null, null, null);
 		for (TaskDefinitionDetour d : td.getDetour()) {
 			if (d.getCondition() == null || verificarCondicao(d.getCondition(), pi, engine.getHandler()))
-				return new TaskResult(TaskResultKind.DONE, d.getTaskId(), null, null, null);
+				return new TaskResult(TaskResultKind.DONE, d.getTaskIdentifier(), null, null, null);
 		}
 
 		// If there is no available detour, then pause

@@ -26,7 +26,7 @@ public class TaskEval implements PausableTask {
 	}
 
 	public static String getEvent(TaskDefinition td, ProcessInstance pi) {
-		return pi.getVariable().get("_codPrincipal") + "|" + td.getId();
+		return pi.getVariable().get("_codPrincipal") + "|" + td.getIdentifier();
 	}
 
 }

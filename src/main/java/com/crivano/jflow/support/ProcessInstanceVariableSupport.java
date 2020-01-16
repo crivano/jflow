@@ -10,12 +10,12 @@ public class ProcessInstanceVariableSupport implements ProcessInstanceVariable {
 	Double number;
 
 	@Override
-	public String getId() {
+	public String getIdentifier() {
 		return id;
 	}
 
 	@Override
-	public void setId(String id) {
+	public void setIdentifier(String id) {
 		this.id = id;
 	}
 

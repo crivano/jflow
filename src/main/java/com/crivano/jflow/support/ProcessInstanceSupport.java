@@ -90,7 +90,7 @@ public abstract class ProcessInstanceSupport implements ProcessInstance {
 	public int getIndexById(String id) {
 		int i = 0;
 		for (TaskDefinition td : definicao.getTaskDefinition()) {
-			if (td.getId().equals(id))
+			if (td.getIdentifier().equals(id))
 				return i;
 			i++;
 		}

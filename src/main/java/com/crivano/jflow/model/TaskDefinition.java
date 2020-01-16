@@ -4,9 +4,7 @@ import java.util.List;
 
 public interface TaskDefinition {
 
-	String getId();
-
-	String getName();
+	String getIdentifier();
 
 	TaskKind getKind();
 

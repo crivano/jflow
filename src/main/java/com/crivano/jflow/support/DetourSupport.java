@@ -21,7 +21,7 @@ public class DetourSupport implements TaskDefinitionDetour {
 	}
 
 	@Override
-	public String getTaskId() {
+	public String getTaskIdentifier() {
 		return tarefa;
 	}
 
@@ -30,17 +30,14 @@ public class DetourSupport implements TaskDefinitionDetour {
 		return condicao;
 	}
 
-	@Override
 	public void setTitle(String titulo) {
 		this.titulo = titulo;
 	}
 
-	@Override
 	public void setTaskId(String tarefa) {
 		this.tarefa = tarefa;
 	}
 
-	@Override
 	public void setCondition(String condicao) {
 		this.condicao = condicao;
 	}

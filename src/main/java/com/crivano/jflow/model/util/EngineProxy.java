@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.crivano.jflow.Engine;
 import com.crivano.jflow.Handler;
-import com.crivano.jflow.model.ProcessDefinition;
 import com.crivano.jflow.model.ProcessInstance;
 
 public class EngineProxy implements Engine {
@@ -23,10 +22,10 @@ public class EngineProxy implements Engine {
 	}
 
 	@Override
-	public void start(ProcessInstance pi, ProcessDefinition definicao, Map<String, Object> variavel) throws Exception {
+	public void start(ProcessInstance pi) throws Exception {
 		if (delegate == null)
 			return;
-		delegate.start(pi, definicao, variavel);
+		delegate.start(pi);
 	}
 
 	@Override

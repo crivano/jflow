@@ -35,7 +35,7 @@ public class EmailTest {
 		String text = "Wellcome ${to.initials}!";
 
 		// Create the task definition
-		td = new TaskDefinitionSupport("1", "test", TaskKindSupport.EMAIL, "Email", null, null, null, null, subject,
+		td = new TaskDefinitionSupport("1", TaskKindSupport.EMAIL, "Email", null, null, null, null, subject,
 				text);
 		pd.getTaskDefinition().add(td);
 
@@ -53,7 +53,7 @@ public class EmailTest {
 
 	@Test
 	public void singleEmailTask() throws Exception {
-		engine.start(pi, pd, variable);
+		engine.start(pi);
 
 		assertEquals("test@example.com|Hi!|Wellcome NAME!", TestUtils.sentEmail);
 

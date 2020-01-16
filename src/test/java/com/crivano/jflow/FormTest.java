@@ -35,8 +35,8 @@ public class FormTest {
 		pd = new ProcessDefinitionSupport();
 
 		// Create the task definition
-		td = new TaskDefinitionSupport("1", "test", TaskKindSupport.FORM, "Form", null,
-				ResponsibleKindSupport.REGISTRANT, null, null, null, null);
+		td = new TaskDefinitionSupport("1", TaskKindSupport.FORM, "Form", null, ResponsibleKindSupport.REGISTRANT, null,
+				null, null, null);
 		pd.getTaskDefinition().add(td);
 
 		// Create the process instance without responsible support
@@ -55,7 +55,7 @@ public class FormTest {
 	public void singleFormTask() throws Exception {
 
 		// Start the process instance
-		engine.start(pi, pd, variable);
+		engine.start(pi);
 
 		// The form is the first and only task definition, engine should wait for an
 		// user event to continue

@@ -25,7 +25,7 @@ public class TaskForm implements PausableTask {
 		String detour = null;
 		if (td.getDetour() != null && td.getDetour().size() > 0 && detourIndex != null
 				&& detourIndex < td.getDetour().size())
-			detour = td.getDetour().get(detourIndex).getTaskId();
+			detour = td.getDetour().get(detourIndex).getTaskIdentifier();
 
 		if (td.getVariable() != null && td.getVariable().size() > 0) {
 			for (TaskDefinitionVariable v : td.getVariable()) {
@@ -39,7 +39,7 @@ public class TaskForm implements PausableTask {
 	}
 
 	public static String getEvent(TaskDefinition tarefa, ProcessInstance procedimento) {
-		return procedimento.getVariable().get("_codPrincipal") + "|" + tarefa.getId();
+		return procedimento.getVariable().get("_codPrincipal") + "|" + tarefa.getIdentifier();
 	}
 
 }

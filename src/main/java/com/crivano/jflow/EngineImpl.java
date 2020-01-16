@@ -3,7 +3,6 @@ package com.crivano.jflow;
 import java.util.List;
 import java.util.Map;
 
-import com.crivano.jflow.model.ProcessDefinition;
 import com.crivano.jflow.model.ProcessInstance;
 import com.crivano.jflow.model.TaskDefinition;
 import com.crivano.jflow.model.enm.ProcessInstanceStatus;
@@ -20,9 +19,7 @@ public class EngineImpl implements Engine {
 	}
 
 	@Override
-	public void start(ProcessInstance pi, ProcessDefinition pd, Map<String, Object> variable) throws Exception {
-		pi.setProcessDefinition(pd);
-		pi.setVariable(variable);
+	public void start(ProcessInstance pi) throws Exception {
 		pi.start();
 		TaskResult r = new TaskResult(TaskResultKind.DONE, null, null, null, null);
 		resume(pi, r);
