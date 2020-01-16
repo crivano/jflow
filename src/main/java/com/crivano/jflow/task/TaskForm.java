@@ -1,5 +1,6 @@
 package com.crivano.jflow.task;
 
+import java.util.List;
 import java.util.Map;
 
 import com.crivano.jflow.Engine;
@@ -7,11 +8,12 @@ import com.crivano.jflow.PausableTask;
 import com.crivano.jflow.TaskResult;
 import com.crivano.jflow.model.ProcessInstance;
 import com.crivano.jflow.model.TaskDefinition;
+import com.crivano.jflow.model.TaskDefinitionDetour;
 import com.crivano.jflow.model.TaskDefinitionVariable;
 import com.crivano.jflow.model.enm.TaskResultKind;
 import com.crivano.jflow.model.enm.VariableEditingKind;
 
-public class TaskForm implements PausableTask {
+public class TaskForm implements PausableTask<TaskDefinition, ProcessInstance> {
 
 	@Override
 	public TaskResult execute(TaskDefinition tarefa, ProcessInstance procedimento, Engine engine) {
@@ -25,10 +27,10 @@ public class TaskForm implements PausableTask {
 		String detour = null;
 		if (td.getDetour() != null && td.getDetour().size() > 0 && detourIndex != null
 				&& detourIndex < td.getDetour().size())
-			detour = td.getDetour().get(detourIndex).getTaskIdentifier();
+			detour = ((TaskDefinitionDetour) td.getDetour().get(detourIndex)).getTaskIdentifier();
 
 		if (td.getVariable() != null && td.getVariable().size() > 0) {
-			for (TaskDefinitionVariable v : td.getVariable()) {
+			for (TaskDefinitionVariable v : (List<TaskDefinitionVariable>) td.getVariable()) {
 				if (v.getEditingKind() == VariableEditingKind.READ_WRITE)
 					pi.getVariable().put(v.getIdentifier(), param.get(v.getIdentifier()));
 			}

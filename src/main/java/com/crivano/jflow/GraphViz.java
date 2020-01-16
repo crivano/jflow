@@ -1,6 +1,7 @@
 package com.crivano.jflow;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.crivano.jflow.model.ProcessDefinition;
 import com.crivano.jflow.model.ProcessInstance;
@@ -18,7 +19,7 @@ public class GraphViz {
 				+ (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "") + ">];";
 		if (n.getKind() != null || n.getIdentifier().equals("start")) {
 			if (n.getDetour() != null && n.getDetour().size() > 0) {
-				for (TaskDefinitionDetour tr : n.getDetour()) {
+				for (TaskDefinitionDetour tr : (List<TaskDefinitionDetour>) (List) n.getDetour()) {
 					if (tr.getTaskIdentifier() != null && tr.getTaskIdentifier().length() > 0)
 						s += "\"" + n.getIdentifier() + "\"->\"" + tr.getTaskIdentifier() + "\"";
 					else if (nextn != null)
@@ -44,21 +45,25 @@ public class GraphViz {
 		ProcessDefinition wf = pi.getProcessDefinition();
 		String s = ""; // "digraph G { graph[size=\"3,3\"];";
 		if (wf.getTaskDefinition() != null && wf.getTaskDefinition().size() > 0) {
-			ArrayList<TaskDefinitionDetour> desvios = new ArrayList<>();
-			desvios.add(new DetourSupport(null, wf.getTaskDefinition().get(0).getIdentifier(), null));
+			List<DetourSupport> desvios = new ArrayList<>();
+			desvios.add(
+					new DetourSupport(null, ((TaskDefinition) wf.getTaskDefinition().get(0)).getIdentifier(), null));
 			s += graphElement("oval", "black",
-					new TaskDefinitionSupport("start", null, labelStart, null, null, null, desvios, null, null), null,
-					null);
+					new TaskDefinitionSupport("start", null, labelStart, null, null, null, desvios, null, null) {
+
+					}, null, null);
 			s += graphElement("oval", "black",
 					new TaskDefinitionSupport("finish", null, labelFinish, null, null, null, null, null, null), null,
 					null);
 
 			for (int i = 0; i < wf.getTaskDefinition().size(); i++) {
-				TaskDefinition n = wf.getTaskDefinition().get(i);
+				TaskDefinition n = ((TaskDefinition) wf.getTaskDefinition().get(i));
 				Responsible responsible = pi.calcResponsible(n);
 				String resp = responsible != null ? responsible.getInitials() : null;
 				s += graphElement(n.getKind().getGraphKind(), pi.getCurrentIndex() == i ? "blue" : "black", n,
-						i < wf.getTaskDefinition().size() - 1 ? wf.getTaskDefinition().get(i + 1) : null, resp);
+						i < wf.getTaskDefinition().size() - 1 ? ((TaskDefinition) wf.getTaskDefinition().get(i + 1))
+								: null,
+						resp);
 			}
 		}
 		// s += "}";

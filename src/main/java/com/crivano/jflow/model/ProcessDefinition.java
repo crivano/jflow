@@ -2,8 +2,8 @@ package com.crivano.jflow.model;
 
 import java.util.List;
 
-public interface ProcessDefinition {
+public interface ProcessDefinition<TD extends TaskDefinition<?, ?, ?, ?>> {
 
-	List<TaskDefinition> getTaskDefinition();
+	List<TD> getTaskDefinition();
 
 }

@@ -2,16 +2,13 @@ package com.crivano.jflow.support;
 
 import java.util.List;
 
-import com.crivano.jflow.model.ResponsibleKind;
 import com.crivano.jflow.model.TaskDefinition;
-import com.crivano.jflow.model.TaskDefinitionDetour;
-import com.crivano.jflow.model.TaskDefinitionVariable;
-import com.crivano.jflow.model.TaskKind;
 
-public class TaskDefinitionSupport implements TaskDefinition {
+public class TaskDefinitionSupport
+		implements TaskDefinition<TaskKindSupport, ResponsibleKindSupport, VariableSupport, DetourSupport> {
 
-	public TaskDefinitionSupport(String id, TaskKind kind, String title, String after,
-			ResponsibleKind responsibleKind, List<TaskDefinitionVariable> variable, List<TaskDefinitionDetour> detour,
+	public TaskDefinitionSupport(String id, TaskKindSupport kind, String title, String after,
+			ResponsibleKindSupport responsibleKind, List<VariableSupport> variable, List<DetourSupport> detour,
 			String subject, String text) {
 		super();
 		this.id = id;
@@ -31,17 +28,17 @@ public class TaskDefinitionSupport implements TaskDefinition {
 
 	String id;
 
-	private TaskKind kind;
+	private TaskKindSupport kind;
 
 	private String title;
 
 	private String after;
 
-	private ResponsibleKind responsibleKind;
+	private ResponsibleKindSupport responsibleKind;
 
-	private List<TaskDefinitionVariable> variable;
+	private List<VariableSupport> variable;
 
-	private List<TaskDefinitionDetour> detour;
+	private List<DetourSupport> detour;
 
 	private String subject;
 
@@ -53,7 +50,7 @@ public class TaskDefinitionSupport implements TaskDefinition {
 	}
 
 	@Override
-	public TaskKind getKind() {
+	public TaskKindSupport getKind() {
 		return kind;
 	}
 
@@ -68,17 +65,17 @@ public class TaskDefinitionSupport implements TaskDefinition {
 	}
 
 	@Override
-	public ResponsibleKind getResponsibleKind() {
+	public ResponsibleKindSupport getResponsibleKind() {
 		return responsibleKind;
 	}
 
 	@Override
-	public List<TaskDefinitionVariable> getVariable() {
+	public List<VariableSupport> getVariable() {
 		return variable;
 	}
 
 	@Override
-	public List<TaskDefinitionDetour> getDetour() {
+	public List<DetourSupport> getDetour() {
 		return detour;
 	}
 

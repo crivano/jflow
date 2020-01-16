@@ -5,28 +5,28 @@ import java.util.Map;
 
 import com.crivano.jflow.model.enm.ProcessInstanceStatus;
 
-public interface ProcessInstance {
+public interface ProcessInstance<PD extends ProcessDefinition<TD>, TD extends TaskDefinition<?, ?, ?, ?>, R extends Responsible> {
 
 	void start();
 
-	void pause(String event, Responsible responsible);
+	void pause(String event, R responsible);
 
 	void resume();
 
 	void end();
 
-	TaskDefinition getCurrentTaskDefinition();
+	TD getCurrentTaskDefinition();
 
-	TaskDefinition getTaskDefinitionByIndex(int i);
+	TD getTaskDefinitionByIndex(int i);
 
 	// Se for "fim" retorna length + 1
 	int getIndexById(String id);
 
-	Responsible calcResponsible(TaskDefinition td);
+	R calcResponsible(TD td);
 
-	String getCode();
+	//String getCode();
 
-	ProcessDefinition getProcessDefinition();
+	PD getProcessDefinition();
 
 	Integer getCurrentIndex();
 
@@ -38,11 +38,11 @@ public interface ProcessInstance {
 
 	String getEvent();
 
-	Responsible getResponsible();
+	R getResponsible();
 
 	void setCurrentIndex(int idx);
 
-	void setProcessDefinition(ProcessDefinition pd);
+	void setProcessDefinition(PD pd);
 
 	void setVariable(Map<String, Object> variable);
 

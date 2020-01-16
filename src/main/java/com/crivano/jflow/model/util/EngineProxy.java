@@ -29,15 +29,15 @@ public class EngineProxy implements Engine {
 	}
 
 	@Override
-	public int resume(String evento, Integer indiceDesvio, Map<String, Object> parametro) throws Exception {
-		if (delegate == null)
-			return 0;
-		return delegate.resume(evento, indiceDesvio, parametro);
+	public Handler getHandler() {
+		return delegate.getHandler();
 	}
 
 	@Override
-	public Handler getHandler() {
-		return delegate.getHandler();
+	public int resume(String event, Integer detourIndex, Map param) throws Exception {
+		if (delegate == null)
+			return 0;
+		return delegate.resume(event, detourIndex, param);
 	}
 
 }

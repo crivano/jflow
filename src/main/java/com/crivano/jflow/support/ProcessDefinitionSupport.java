@@ -6,11 +6,11 @@ import java.util.List;
 import com.crivano.jflow.model.ProcessDefinition;
 import com.crivano.jflow.model.TaskDefinition;
 
-public class ProcessDefinitionSupport implements ProcessDefinition {
-	private List<TaskDefinition> tarefa = new ArrayList<>();
+public class ProcessDefinitionSupport implements ProcessDefinition<TaskDefinitionSupport> {
+	private List<TaskDefinitionSupport> tarefa = new ArrayList<>();
 
 	@Override
-	public List<TaskDefinition> getTaskDefinition() {
+	public List<TaskDefinitionSupport> getTaskDefinition() {
 		return tarefa;
 	}
 }

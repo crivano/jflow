@@ -7,14 +7,11 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.crivano.jflow.model.ProcessDefinition;
-import com.crivano.jflow.model.ProcessInstance;
-import com.crivano.jflow.model.Responsible;
-import com.crivano.jflow.model.TaskDefinition;
 import com.crivano.jflow.model.enm.ProcessInstanceStatus;
 import com.crivano.jflow.support.ProcessDefinitionSupport;
 import com.crivano.jflow.support.ProcessInstanceSupport;
 import com.crivano.jflow.support.ResponsibleKindSupport;
+import com.crivano.jflow.support.ResponsibleSupport;
 import com.crivano.jflow.support.TaskDefinitionSupport;
 import com.crivano.jflow.support.TaskKindSupport;
 import com.crivano.jflow.task.TaskForm;
@@ -22,11 +19,11 @@ import com.crivano.jflow.task.TaskForm;
 public class FormTest {
 
 	Engine engine;
-	ProcessDefinition pd;
-	TaskDefinition td;
+	ProcessDefinitionSupport pd;
+	TaskDefinitionSupport td;
 
 	HashMap<String, Object> variable;
-	ProcessInstance pi;
+	ProcessInstanceSupport pi;
 
 	@Before
 	public void before() {
@@ -41,9 +38,9 @@ public class FormTest {
 
 		// Create the process instance without responsible support
 		variable = new HashMap<String, Object>();
-		pi = new ProcessInstanceSupport(pd, variable, null) {
+		pi = new ProcessInstanceSupport(pd, variable) {
 			@Override
-			public Responsible calcResponsible(TaskDefinition tarefa) {
+			public ResponsibleSupport calcResponsible(TaskDefinitionSupport tarefa) {
 				return null;
 			}
 		};

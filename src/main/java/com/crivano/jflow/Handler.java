@@ -3,14 +3,14 @@ package com.crivano.jflow;
 import com.crivano.jflow.model.ProcessInstance;
 import com.crivano.jflow.model.Responsible;
 
-public interface Handler {
-	void afterPause(ProcessInstance pi, TaskResult result);
+public interface Handler<PI extends ProcessInstance<?, ?, ?>, R extends Responsible> {
+	void afterPause(PI pi, TaskResult result);
 
-	boolean evalCondition(ProcessInstance pi, String expression);
+	boolean evalCondition(PI pi, String expression);
 
-	TaskResult evalTask(ProcessInstance pi, String expression);
+	TaskResult evalTask(PI pi, String expression);
 
-	String evalTemplate(ProcessInstance pi, String template);
+	String evalTemplate(PI pi, String template);
 
-	void sendEmail(Responsible responsible, String subject, String text);
+	void sendEmail(R responsible, String subject, String text);
 }

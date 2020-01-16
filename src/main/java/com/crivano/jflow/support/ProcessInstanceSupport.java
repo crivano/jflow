@@ -6,19 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.crivano.jflow.model.Principal;
-import com.crivano.jflow.model.ProcessDefinition;
 import com.crivano.jflow.model.ProcessInstance;
-import com.crivano.jflow.model.Responsible;
 import com.crivano.jflow.model.TaskDefinition;
 import com.crivano.jflow.model.enm.ProcessInstanceStatus;
 
-public abstract class ProcessInstanceSupport implements ProcessInstance {
+public abstract class ProcessInstanceSupport
+		implements ProcessInstance<ProcessDefinitionSupport, TaskDefinitionSupport, ResponsibleSupport> {
 	private String codigo;
 
-	private ProcessDefinition definicao;
-
-	private Principal principal;
+	private ProcessDefinitionSupport definicao;
 
 	private Integer indiceCorrente = null;
 
@@ -32,17 +28,12 @@ public abstract class ProcessInstanceSupport implements ProcessInstance {
 
 	private String evento;
 
-	Responsible responsavel;
+	ResponsibleSupport responsavel;
 
-	public ProcessInstanceSupport(ProcessDefinition definicao, Map<String, Object> variavel, Principal principal) {
+	public ProcessInstanceSupport(ProcessDefinitionSupport definicao, Map<String, Object> variavel) {
 		this.definicao = definicao;
 		if (variavel != null)
 			this.variavel.putAll(variavel);
-		if (principal != null) {
-			this.principal = principal;
-			this.variavel.put("_keyPrincipal", this.principal.toString());
-			this.variavel.put("_codPrincipal", this.principal.getCode());
-		}
 	}
 
 	@Override
@@ -52,7 +43,7 @@ public abstract class ProcessInstanceSupport implements ProcessInstance {
 	}
 
 	@Override
-	public void pause(String evento, Responsible responsavel) {
+	public void pause(String evento, ResponsibleSupport responsavel) {
 		this.evento = evento;
 		this.responsavel = responsavel;
 		this.dtEvento = new Date();
@@ -74,12 +65,12 @@ public abstract class ProcessInstanceSupport implements ProcessInstance {
 	}
 
 	@Override
-	public TaskDefinition getCurrentTaskDefinition() {
+	public TaskDefinitionSupport getCurrentTaskDefinition() {
 		return getTaskDefinitionByIndex(indiceCorrente);
 	}
 
 	@Override
-	public TaskDefinition getTaskDefinitionByIndex(int i) {
+	public TaskDefinitionSupport getTaskDefinitionByIndex(int i) {
 		if (i < 0 || i >= definicao.getTaskDefinition().size())
 			return null;
 		return definicao.getTaskDefinition().get(i);
@@ -130,20 +121,16 @@ public abstract class ProcessInstanceSupport implements ProcessInstance {
 	}
 
 	@Override
-	public abstract Responsible calcResponsible(TaskDefinition tarefa);
+	public abstract ResponsibleSupport calcResponsible(TaskDefinitionSupport tarefa);
+
+//	@Override
+//	public String getCode() {
+//		return codigo;
+//	}
 
 	@Override
-	public String getCode() {
-		return codigo;
-	}
-
-	@Override
-	public ProcessDefinition getProcessDefinition() {
+	public ProcessDefinitionSupport getProcessDefinition() {
 		return definicao;
-	}
-
-	public Principal getPrincipal() {
-		return principal;
 	}
 
 	@Override
@@ -172,7 +159,7 @@ public abstract class ProcessInstanceSupport implements ProcessInstance {
 	}
 
 	@Override
-	public Responsible getResponsible() {
+	public ResponsibleSupport getResponsible() {
 		return responsavel;
 	}
 
@@ -182,12 +169,8 @@ public abstract class ProcessInstanceSupport implements ProcessInstance {
 	}
 
 	@Override
-	public void setProcessDefinition(ProcessDefinition definicao) {
+	public void setProcessDefinition(ProcessDefinitionSupport definicao) {
 		this.definicao = definicao;
-	}
-
-	public void setPrincipal(Principal principal) {
-		this.principal = principal;
 	}
 
 	@Override

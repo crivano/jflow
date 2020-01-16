@@ -1,5 +1,6 @@
 package com.crivano.jflow.task;
 
+import java.util.List;
 import java.util.Map;
 
 import com.crivano.jflow.Engine;
@@ -11,13 +12,13 @@ import com.crivano.jflow.model.TaskDefinition;
 import com.crivano.jflow.model.TaskDefinitionDetour;
 import com.crivano.jflow.model.enm.TaskResultKind;
 
-public class TaskDecision implements PausableTask {
+public class TaskDecision implements PausableTask<TaskDefinition, ProcessInstance> {
 
 	@Override
 	public TaskResult execute(TaskDefinition td, ProcessInstance pi, Engine engine) {
 		if (td.getDetour() == null || td.getDetour().size() == 0)
 			return new TaskResult(TaskResultKind.DONE, null, null, null, null);
-		for (TaskDefinitionDetour d : td.getDetour()) {
+		for (TaskDefinitionDetour d : (List<TaskDefinitionDetour>) td.getDetour()) {
 			if (d.getCondition() == null || verificarCondicao(d.getCondition(), pi, engine.getHandler()))
 				return new TaskResult(TaskResultKind.DONE, d.getTaskIdentifier(), null, null, null);
 		}

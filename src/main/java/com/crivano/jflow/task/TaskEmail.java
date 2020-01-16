@@ -8,7 +8,7 @@ import com.crivano.jflow.model.Responsible;
 import com.crivano.jflow.model.TaskDefinition;
 import com.crivano.jflow.model.enm.TaskResultKind;
 
-public class TaskEmail implements Task {
+public class TaskEmail implements Task<TaskDefinition, ProcessInstance> {
 
 	@Override
 	public TaskResult execute(TaskDefinition td, ProcessInstance pi, Engine engine) {

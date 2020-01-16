@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.crivano.jflow.model.ProcessInstance;
 
-public interface Dao {
+public interface Dao<PI extends ProcessInstance<?, ?, ?>> {
 
-	void persist(ProcessInstance pi);
+	void persist(PI pi);
 
-	List<ProcessInstance> listByEvent(String event);
+	List<PI> listByEvent(String event);
 
 }

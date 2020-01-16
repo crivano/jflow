@@ -9,7 +9,7 @@ import com.crivano.jflow.model.ProcessInstance;
 import com.crivano.jflow.model.TaskDefinition;
 import com.crivano.jflow.model.enm.TaskResultKind;
 
-public class TaskEval implements PausableTask {
+public class TaskEval implements PausableTask<TaskDefinition, ProcessInstance> {
 
 	@Override
 	public TaskResult execute(TaskDefinition td, ProcessInstance pi, Engine engine) {

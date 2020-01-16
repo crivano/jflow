@@ -2,21 +2,21 @@ package com.crivano.jflow.model;
 
 import java.util.List;
 
-public interface TaskDefinition {
+public interface TaskDefinition<TK extends TaskKind, RK extends ResponsibleKind, DV extends TaskDefinitionVariable, DD extends TaskDefinitionDetour> {
 
 	String getIdentifier();
 
-	TaskKind getKind();
+	TK getKind();
 
 	String getTitle();
 
 	String getAfter();
 
-	ResponsibleKind getResponsibleKind();
+	RK getResponsibleKind();
 
-	List<TaskDefinitionVariable> getVariable();
+	List<DV> getVariable();
 
-	List<TaskDefinitionDetour> getDetour();
+	List<DD> getDetour();
 
 	String getSubject();
 
