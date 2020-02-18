@@ -27,7 +27,7 @@ public class TestUtils {
 
 	// Creates the workflow engine, mocking the dao and the handler. Uses MVEL to
 	// evaluate expressions.
-	public static Engine buildEngine(ProcessInstanceSupport pi) {
+	public static Engine buildEngine(final ProcessInstanceSupport pi) {
 		return new EngineImpl(new Dao<ProcessInstanceSupport>() {
 
 			@Override

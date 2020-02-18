@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class DecisionTest {
 
 		// Create the task definition
 		td = new TaskDefinitionSupport("1", TaskKindSupport.DECISION, "Decision", null,
-				ResponsibleKindSupport.REGISTRANT, null, new ArrayList<>(), null, null);
+				ResponsibleKindSupport.REGISTRANT, null, (List) new ArrayList<>(), null, null);
 		td.getDetour().add(new DetourSupport("D1", "2", "d =='2'"));
 		td.getDetour().add(new DetourSupport("D2", "3", "d =='3'"));
 		pd.getTaskDefinition().add(td);
