@@ -6,20 +6,24 @@ import java.util.List;
 import com.crivano.jflow.model.ProcessDefinition;
 import com.crivano.jflow.model.ProcessInstance;
 import com.crivano.jflow.model.Responsible;
+import com.crivano.jflow.model.ResponsibleKind;
 import com.crivano.jflow.model.TaskDefinition;
 import com.crivano.jflow.model.TaskDefinitionDetour;
+import com.crivano.jflow.model.TaskDefinitionVariable;
+import com.crivano.jflow.model.TaskKind;
 import com.crivano.jflow.support.DetourSupport;
 import com.crivano.jflow.support.TaskDefinitionSupport;
 
 public class GraphViz {
-	private static String graphElement(String shape, String color, TaskDefinition n, TaskDefinition nextn,
-			String resp) {
+	private static String graphElement(String shape, String color,
+			TaskDefinition n,
+			TaskDefinition nextn, String resp) {
 		String s = "\"" + n.getIdentifier() + "\"[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\""
 				+ color + "\"][label=<" + n.getTitle()
 				+ (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "") + ">];";
 		if (n.getKind() != null || n.getIdentifier().equals("start")) {
 			if (n.getDetour() != null && n.getDetour().size() > 0) {
-				for (TaskDefinitionDetour tr : (List<TaskDefinitionDetour>) (List) n.getDetour()) {
+				for (TaskDefinitionDetour tr : (List<TaskDefinitionDetour>) n.getDetour()) {
 					if (tr.getTaskIdentifier() != null && tr.getTaskIdentifier().length() > 0)
 						s += "\"" + n.getIdentifier() + "\"->\"" + tr.getTaskIdentifier() + "\"";
 					else if (nextn != null)
@@ -57,7 +61,7 @@ public class GraphViz {
 					null);
 
 			for (int i = 0; i < wf.getTaskDefinition().size(); i++) {
-				TaskDefinition n = ((TaskDefinition) wf.getTaskDefinition().get(i));
+				TaskDefinition n = (TaskDefinition) wf.getTaskDefinition().get(i);
 				Responsible responsible = pi.calcResponsible(n);
 				String resp = responsible != null ? responsible.getInitials() : null;
 				s += graphElement(n.getKind().getGraphKind(), pi.getCurrentIndex() == i ? "blue" : "black", n,

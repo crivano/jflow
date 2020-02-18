@@ -5,14 +5,21 @@ import java.util.Map;
 import com.crivano.jflow.Engine;
 import com.crivano.jflow.PausableTask;
 import com.crivano.jflow.TaskResult;
+import com.crivano.jflow.model.ProcessDefinition;
 import com.crivano.jflow.model.ProcessInstance;
+import com.crivano.jflow.model.Responsible;
+import com.crivano.jflow.model.ResponsibleKind;
 import com.crivano.jflow.model.TaskDefinition;
+import com.crivano.jflow.model.TaskDefinitionDetour;
+import com.crivano.jflow.model.TaskDefinitionVariable;
+import com.crivano.jflow.model.TaskKind;
 import com.crivano.jflow.model.enm.TaskResultKind;
 
-public class TaskEval implements PausableTask<TaskDefinition, ProcessInstance> {
+public class TaskEval<PD extends ProcessDefinition<TD>, TD extends TaskDefinition<TK, RK, DV, DD>, R extends Responsible, TK extends TaskKind, RK extends ResponsibleKind, DV extends TaskDefinitionVariable, DD extends TaskDefinitionDetour, PI extends ProcessInstance<PD, TD, R>>
+		implements PausableTask<TD, PI> {
 
 	@Override
-	public TaskResult execute(TaskDefinition td, ProcessInstance pi, Engine engine) {
+	public TaskResult execute(TD td, PI pi, Engine engine) throws Exception {
 		TaskResult result = engine.getHandler().evalTask(pi, td.getText());
 		if (result != null)
 			return result;
@@ -20,8 +27,8 @@ public class TaskEval implements PausableTask<TaskDefinition, ProcessInstance> {
 	}
 
 	@Override
-	public TaskResult resume(TaskDefinition td, ProcessInstance pi, Integer detourIndex, Map<String, Object> param,
-			Engine engine) {
+	public TaskResult resume(TD td, PI pi, Integer detourIndex, Map<String, Object> param, Engine<?, ?, ?> engine)
+			throws Exception {
 		return execute(td, pi, engine);
 	}
 

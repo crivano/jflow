@@ -7,5 +7,6 @@ import com.crivano.jflow.model.TaskDefinition;
 
 public interface PausableTask<TD extends TaskDefinition<?, ?, ?, ?>, PI extends ProcessInstance<?, ?, ?>>
 		extends Task<TD, PI> {
-	TaskResult resume(TD td, PI pi, Integer detourIndex, Map<String, Object> param, Engine engine);
+	TaskResult resume(TD td, PI pi, Integer detourIndex, Map<String, Object> param, Engine<?, ?, ?> engine)
+			throws Exception;
 }
