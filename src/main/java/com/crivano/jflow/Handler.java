@@ -13,4 +13,6 @@ public interface Handler<PI extends ProcessInstance<?, ?, ?>, R extends Responsi
 	String evalTemplate(PI pi, String template);
 
 	void sendEmail(R responsible, String subject, String text);
+	
+	void afterTransition(PI pi, Integer from, Integer to);
 }

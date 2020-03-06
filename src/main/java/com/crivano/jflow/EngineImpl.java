@@ -80,6 +80,8 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 		case DONE:
 			pi.resume();
 
+			Integer from = pi.getCurrentIndex() >= 0 ? pi.getCurrentIndex() : null;
+
 			int prox = pi.getCurrentIndex() + 1;
 			if (result.getDetour() != null && result.getDetour().length() > 0)
 				prox = pi.getIndexById(result.getDetour());
@@ -89,6 +91,8 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 				pi.end();
 				if (getDao() != null)
 					getDao().persist(pi);
+				if (getHandler() != null)
+					getHandler().afterTransition(pi, from, pi.getCurrentIndex());
 				break;
 			}
 
@@ -96,6 +100,8 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 			TaskDefinition td = pi.getCurrentTaskDefinition();
 			if (getDao() != null)
 				getDao().persist(pi);
+			if (getHandler() != null)
+				getHandler().afterTransition(pi, from, pi.getCurrentIndex());
 
 			Task ti = td.getKind().getClazz().newInstance();
 			TaskDefinition proxtd = pi.getTaskDefinitionByIndex(prox);

@@ -75,6 +75,10 @@ public class TestUtils {
 				sentEmail = ((ResponsibleSupport) responsible).getEmail() + "|" + subject + "|" + text;
 			}
 
+			@Override
+			public void afterTransition(ProcessInstanceSupport pi, Integer from, Integer to) {
+			}
+
 		});
 	}
 }
