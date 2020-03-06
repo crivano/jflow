@@ -15,9 +15,8 @@ import com.crivano.jflow.support.DetourSupport;
 import com.crivano.jflow.support.TaskDefinitionSupport;
 
 public class GraphViz {
-	private static String graphElement(String shape, String color,
-			TaskDefinition n,
-			TaskDefinition nextn, String resp) {
+	private static String graphElement(String shape, String color, TaskDefinition n, TaskDefinition nextn,
+			String resp) {
 		String s = "\"" + n.getIdentifier() + "\"[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\""
 				+ color + "\"][label=<" + n.getTitle()
 				+ (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "") + ">];";
@@ -56,7 +55,7 @@ public class GraphViz {
 					new TaskDefinitionSupport("start", null, labelStart, null, null, null, desvios, null, null) {
 
 					}, null, null);
-			s += graphElement("oval", "black",
+			s += graphElement("oval", pi.getCurrentIndex() == null ? "blue" : "black",
 					new TaskDefinitionSupport("finish", null, labelFinish, null, null, null, null, null, null), null,
 					null);
 
@@ -64,7 +63,8 @@ public class GraphViz {
 				TaskDefinition n = (TaskDefinition) wf.getTaskDefinition().get(i);
 				Responsible responsible = pi.calcResponsible(n);
 				String resp = responsible != null ? responsible.getInitials() : null;
-				s += graphElement(n.getKind().getGraphKind(), pi.getCurrentIndex() == i ? "blue" : "black", n,
+				s += graphElement(n.getKind().getGraphKind(),
+						(pi.getCurrentIndex() != null && pi.getCurrentIndex() == i) ? "blue" : "black", n,
 						i < wf.getTaskDefinition().size() - 1 ? ((TaskDefinition) wf.getTaskDefinition().get(i + 1))
 								: null,
 						resp);
