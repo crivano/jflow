@@ -14,7 +14,6 @@ import com.crivano.jflow.support.ResponsibleKindSupport;
 import com.crivano.jflow.support.ResponsibleSupport;
 import com.crivano.jflow.support.TaskDefinitionSupport;
 import com.crivano.jflow.support.TaskKindSupport;
-import com.crivano.jflow.task.TaskForm;
 
 public class FormTest {
 
@@ -64,7 +63,7 @@ public class FormTest {
 				GraphViz.getDot(pi, "Start", "Finish"));
 
 		// Resume after the user has filled the form
-		engine.resume(TaskForm.getEvent(td, pi), null, null);
+		engine.resume(pi.getVariable().get("_codPrincipal") + "|" + td.getIdentifier(), null, null);
 
 		// Workflow should be ended by now
 		assertEquals(ProcessInstanceStatus.FINISHED, pi.getStatus());

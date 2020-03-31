@@ -19,9 +19,9 @@ import com.crivano.jflow.model.enm.VariableEditingKind;
 
 public class TaskForm<PD extends ProcessDefinition<TD>, TD extends TaskDefinition<TK, RK, DV, DD>, R extends Responsible, TK extends TaskKind, RK extends ResponsibleKind, DV extends TaskDefinitionVariable, DD extends TaskDefinitionDetour, PI extends ProcessInstance<PD, TD, R>>
 		implements PausableTask<TD, PI> {
-	public static String getEvent(TaskDefinition tarefa, ProcessInstance procedimento) {
-		return procedimento.getVariable().get("_codPrincipal") + "|" + tarefa.getIdentifier();
-	}
+	public String getEvent(TD td, PI pi) {
+		return pi.getVariable().get("_codPrincipal") + "|" + td.getIdentifier();
+	};
 
 	@Override
 	public TaskResult execute(TD td, PI pi, Engine engine) throws Exception {
