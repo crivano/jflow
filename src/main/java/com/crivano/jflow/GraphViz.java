@@ -22,15 +22,15 @@ public class GraphViz {
 				+ (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "") + ">];";
 		if (n.getKind() != null || n.getIdentifier().equals("start")) {
 			if (n.getDetour() != null && n.getDetour().size() > 0) {
-				for (TaskDefinitionDetour tr : (List<TaskDefinitionDetour>) n.getDetour()) {
-					if (tr.getTaskIdentifier() != null && tr.getTaskIdentifier().length() > 0)
-						s += "\"" + n.getIdentifier() + "\"->\"" + tr.getTaskIdentifier() + "\"";
+				for (TaskDefinitionDetour dd : (List<TaskDefinitionDetour>) n.getDetour()) {
+					if (dd.getTaskIdentifier() != null && dd.getTaskIdentifier().length() > 0)
+						s += "\"" + n.getIdentifier() + "\"->\"" + dd.getTaskIdentifier() + "\"";
 					else if (nextn != null)
 						s += "\"" + n.getIdentifier() + "\"->\"" + nextn.getIdentifier() + "\"";
 					else
 						s += "\"" + n.getIdentifier() + "\"->\"finish\"";
-					if (tr.getTitle() != null && tr.getTitle().trim().length() != 0)
-						s += " [label=\"" + tr.getTitle() + "\"]";
+					if (dd.getTitle() != null && dd.getTitle().trim().length() != 0)
+						s += " [label=\"" + dd.getTitle() + "\"]";
 					s += ";";
 				}
 			} else if (n.getAfter() != null) {
