@@ -96,6 +96,6 @@ License
 ====
 Copyright 2020 Renato Crivano
 
-Licensed under the Apache License, Version 2.0
+Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
 
-http://www.apache.org/licenses/LICENSE-2.0
+http://www.gnu.org/licenses/agpl-3.0.html
