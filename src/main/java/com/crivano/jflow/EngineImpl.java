@@ -71,9 +71,6 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 			if (result.getEvent() == null)
 				throw new Exception("error processing task " + td.toString()
 						+ ", when 'PAUSE' is returned, an 'event' must be specified.");
-			if (result.getResponsible() == null)
-				throw new Exception("error processing task " + td.toString()
-						+ ", when 'PAUSE' is returned, an 'responsible' must be specified.");
 			pi.pause(result.getEvent(), (R) result.getResponsible());
 			if (getDao() != null)
 				getDao().persist(pi);
