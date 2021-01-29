@@ -13,4 +13,6 @@ public interface Engine<PI extends ProcessInstance<?, ?, ?>, R extends Responsib
 
 	H getHandler();
 
+	TaskResult execute(PI pi, Integer from, int to) throws Exception;
+
 }

@@ -83,12 +83,12 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 
 			Integer from = pi.getCurrentIndex() >= 0 ? pi.getCurrentIndex() : null;
 
-			int prox = pi.getCurrentIndex() + 1;
+			int to = pi.getCurrentIndex() + 1;
 			if (result.getDetour() != null && result.getDetour().length() > 0)
-				prox = pi.getIndexById(result.getDetour());
+				to = pi.getIndexById(result.getDetour());
 			else if (pi.getCurrentTaskDefinition() != null && pi.getCurrentTaskDefinition().getAfter() != null)
-				prox = pi.getIndexById(pi.getCurrentTaskDefinition().getAfter());
-			if (prox >= pi.getProcessDefinition().getTaskDefinition().size()) {
+				to = pi.getIndexById(pi.getCurrentTaskDefinition().getAfter());
+			if (to >= pi.getProcessDefinition().getTaskDefinition().size()) {
 				pi.end();
 				if (getDao() != null)
 					getDao().persist(pi);
@@ -96,20 +96,26 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 					getHandler().afterTransition(pi, from, pi.getCurrentIndex());
 				break;
 			}
-
-			pi.setCurrentIndex(prox);
-			TaskDefinition td = pi.getCurrentTaskDefinition();
-			if (getDao() != null)
-				getDao().persist(pi);
-			if (getHandler() != null)
-				getHandler().afterTransition(pi, from, pi.getCurrentIndex());
-
-			Task ti = td.getKind().getClazz().newInstance();
-			TaskDefinition proxtd = pi.getTaskDefinitionByIndex(prox);
-			TaskResult proxr = ti.execute(proxtd, pi, this);
-			resume(pi, proxr);
+			execute(pi, from, to);
 		}
 		return result;
+	}
+
+	@Override
+	public TaskResult execute(PI pi, Integer from, int to) throws Exception {
+		pi.resume();
+
+		pi.setCurrentIndex(to);
+		TaskDefinition td = pi.getCurrentTaskDefinition();
+		if (getDao() != null)
+			getDao().persist(pi);
+		if (getHandler() != null)
+			getHandler().afterTransition(pi, from, pi.getCurrentIndex());
+
+		Task ti = td.getKind().getClazz().newInstance();
+		TaskDefinition tdTo = pi.getTaskDefinitionByIndex(to);
+		TaskResult trTo = ti.execute(tdTo, pi, this);
+		return resume(pi, trTo);
 	}
 
 	public H getHandler() {

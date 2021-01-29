@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.crivano.jflow.Engine;
 import com.crivano.jflow.Handler;
+import com.crivano.jflow.TaskResult;
 import com.crivano.jflow.model.ProcessInstance;
 
 public class EngineProxy implements Engine {
@@ -38,6 +39,13 @@ public class EngineProxy implements Engine {
 		if (delegate == null)
 			return 0;
 		return delegate.resume(event, detourIndex, param);
+	}
+
+	@Override
+	public TaskResult execute(ProcessInstance pi, Integer from, int to) throws Exception {
+		if (delegate == null)
+			return null;
+		return delegate.execute(pi, from, to);
 	}
 
 }
