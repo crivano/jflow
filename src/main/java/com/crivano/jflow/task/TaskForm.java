@@ -16,6 +16,7 @@ import com.crivano.jflow.model.TaskDefinitionVariable;
 import com.crivano.jflow.model.TaskKind;
 import com.crivano.jflow.model.enm.TaskResultKind;
 import com.crivano.jflow.model.enm.VariableEditingKind;
+import com.crivano.jflow.model.util.MissingParameterException;
 
 public class TaskForm<PD extends ProcessDefinition<TD>, TD extends TaskDefinition<TK, RK, DV, DD>, R extends Responsible, TK extends TaskKind, RK extends ResponsibleKind, DV extends TaskDefinitionVariable, DD extends TaskDefinitionDetour, PI extends ProcessInstance<PD, TD, R>>
 		implements PausableTask<TD, PI> {
@@ -38,8 +39,12 @@ public class TaskForm<PD extends ProcessDefinition<TD>, TD extends TaskDefinitio
 
 		if (td.getVariable() != null && td.getVariable().size() > 0) {
 			for (DV v : (List<DV>) td.getVariable()) {
-				if (v.getEditingKind() == VariableEditingKind.READ_WRITE)
-					pi.getVariable().put(v.getIdentifier(), param.get(v.getIdentifier()));
+				if (v.getEditingKind() == VariableEditingKind.READ_ONLY)
+					continue;
+				Object value = param.get(v.getIdentifier());
+				if (v.getEditingKind() == VariableEditingKind.READ_WRITE_REQUIRED && value == null)
+					throw new MissingParameterException(v.getIdentifier());
+				pi.getVariable().put(v.getIdentifier(), value);
 			}
 
 		}

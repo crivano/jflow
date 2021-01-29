@@ -1,6 +1,8 @@
 package com.crivano.jflow.model.enm;
 
 public enum VariableEditingKind {
+	READ_WRITE_REQUIRED("Required"),
+	//
 	READ_WRITE("Read and Write"),
 	//
 	READ_ONLY("Read Only");
