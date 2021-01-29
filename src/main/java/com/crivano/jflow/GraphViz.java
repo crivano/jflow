@@ -63,4 +63,27 @@ public class GraphViz {
 		return s;
 	}
 
+	public static String getDot(ProcessDefinition wf, String labelStart, String labelFinish) {
+		String s = ""; // "digraph G { graph[size=\"3,3\"];";
+		if (wf.getTaskDefinition() != null && wf.getTaskDefinition().size() > 0) {
+			List<DetourSupport> desvios = new ArrayList<>();
+			desvios.add(
+					new DetourSupport(null, ((TaskDefinition) wf.getTaskDefinition().get(0)).getIdentifier(), null));
+			s += graphElement("oval", "black",
+					new TaskDefinitionSupport("start", null, labelStart, null, null, null, desvios, null, null) {
+
+					}, null);
+			s += graphElement("oval", "black",
+					new TaskDefinitionSupport("finish", null, labelFinish, null, null, null, null, null, null), null);
+
+			for (int i = 0; i < wf.getTaskDefinition().size(); i++) {
+				TaskDefinition n = (TaskDefinition) wf.getTaskDefinition().get(i);
+				s += graphElement(n.getKind().getGraphKind(), "black", n, n.getResponsibleDescription());
+			}
+		}
+		// s += "}";
+		// System.out.println(s);
+		return s;
+	}
+
 }

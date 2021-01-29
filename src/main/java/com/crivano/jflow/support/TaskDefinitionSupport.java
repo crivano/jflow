@@ -89,4 +89,9 @@ public class TaskDefinitionSupport
 		return text;
 	}
 
+	@Override
+	public String getResponsibleDescription() {
+		return null;
+	}
+
 }

@@ -22,4 +22,6 @@ public interface TaskDefinition<TK extends TaskKind, RK extends ResponsibleKind,
 
 	String getText();
 
+	String getResponsibleDescription();
+
 }
