@@ -5,6 +5,8 @@ public enum VariableKind {
 	//
 	DATE("Date"),
 	//
+	DOUBLE("Number"),
+	//
 	BOOLEAN("Boolean");
 
 	private final String descr;
