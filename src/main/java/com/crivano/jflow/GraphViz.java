@@ -21,6 +21,8 @@ public class GraphViz {
 				for (TaskDefinitionDetour dd : (List<TaskDefinitionDetour>) n.getDetour()) {
 					if (dd.getTaskIdentifier() != null && dd.getTaskIdentifier().length() > 0)
 						s += "\"" + n.getIdentifier() + "\"->\"" + dd.getTaskIdentifier() + "\"";
+					else if (n.getAfter() != null)
+						s += "\"" + n.getIdentifier() + "\"->\"" + n.getAfter() + "\"";
 					else
 						s += "\"" + n.getIdentifier() + "\"->\"finish\"";
 					if (dd.getTitle() != null && dd.getTitle().trim().length() != 0)
