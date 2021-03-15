@@ -62,8 +62,9 @@ public class FormTest {
 				"\"start\"[shape=\"oval\"][color=\"black\"][fontcolor=\"black\"][label=<Start>];\"start\"->\"1\";\"finish\"[shape=\"oval\"][color=\"black\"][fontcolor=\"black\"][label=<Finish>];\"1\"[shape=\"rectangle\"][color=\"blue\"][fontcolor=\"blue\"][label=<Form>];\"1\"->\"finish\";",
 				GraphViz.getDot(pi, "Start", "Finish"));
 
-		// Resume after the user has filled the form
-		engine.resume(pi.getVariable().get("_codPrincipal") + "|" + td.getIdentifier(), null, null);
+		// Resume after the user has filled the form. Either detourIndex ou params must
+		// be non null to continue to the next step.
+		engine.resume(pi.getVariable().get("_codPrincipal") + "|" + td.getIdentifier(), null, new HashMap<>());
 
 		// Workflow should be ended by now
 		assertEquals(ProcessInstanceStatus.FINISHED, pi.getStatus());

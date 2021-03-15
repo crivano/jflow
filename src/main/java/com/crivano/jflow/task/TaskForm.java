@@ -32,6 +32,8 @@ public class TaskForm<PD extends ProcessDefinition<TD>, TD extends TaskDefinitio
 	@Override
 	public TaskResult resume(TD td, PI pi, Integer detourIndex, Map<String, Object> param, Engine<?, ?, ?> engine)
 			throws Exception {
+		if (detourIndex == null && param == null)
+			return execute(td, pi, engine);
 		String detour = null;
 		if (td.getDetour() != null && td.getDetour().size() > 0 && detourIndex != null
 				&& detourIndex < td.getDetour().size())
@@ -41,7 +43,7 @@ public class TaskForm<PD extends ProcessDefinition<TD>, TD extends TaskDefinitio
 			for (DV v : (List<DV>) td.getVariable()) {
 				if (v.getEditingKind() == VariableEditingKind.READ_ONLY)
 					continue;
-				Object value = param.get(v.getIdentifier());
+				Object value = param != null ? param.get(v.getIdentifier()) : null;
 				if (v.getEditingKind() == VariableEditingKind.READ_WRITE_REQUIRED && value == null)
 					throw new MissingParameterException(v.getIdentifier());
 				pi.getVariable().put(v.getIdentifier(), value);
