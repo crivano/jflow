@@ -40,7 +40,7 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 		int i = 0;
 		for (PI pi : l) {
 			if (pi.getStatus() != ProcessInstanceStatus.PAUSED
-					|| !(pi.getEvent() != null && pi.getEvent().startsWith(event)))
+					|| !(pi.getIdEvent() != null && pi.getIdEvent().startsWith(event)))
 				continue;
 			TD td = pi.getCurrentTaskDefinition();
 			Class<? extends Task> clazz = td.getKind().getClazz();

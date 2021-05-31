@@ -36,7 +36,7 @@ public interface ProcessInstance<PD extends ProcessDefinition<TD>, TD extends Ta
 
 	Date getDtEvent();
 
-	String getEvent();
+	String getIdEvent();
 
 	R getResponsible();
 

@@ -154,7 +154,7 @@ public abstract class ProcessInstanceSupport
 	}
 
 	@Override
-	public String getEvent() {
+	public String getIdEvent() {
 		return evento;
 	}
 
