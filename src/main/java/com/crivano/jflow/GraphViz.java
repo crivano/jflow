@@ -14,8 +14,22 @@ import com.crivano.jflow.support.TaskDefinitionSupport;
 public class GraphViz {
 	private static String graphElement(String shape, String color, TaskDefinition n, String resp) {
 		String s = "\"" + n.getIdentifier() + "\"[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\""
-				+ color + "\"][label=<" + n.getTitle()
-				+ (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "") + ">];";
+				+ color + "\"][label=<"
+				+ (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null
+						? "<font point-size=\"10pt\">" + n.getKind().getGraphTitle() + "</font><br/>"
+						: "")
+				+ n.getTitle() + (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "") + ">];";
+		if (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null && "rectangle".equals(shape)) {
+			shape = "plaintext";
+			s = "\"" + n.getIdentifier() + "\"[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\"" + color
+					+ "\"][label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">"
+					+ (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null
+							? "<TR><TD><font point-size=\"10pt\">" + n.getKind().getGraphTitle() + "</font></TD></TR>"
+							: "")
+					+ "<TR><TD CELLSPACING=\"0\">" + n.getTitle() + ""
+					+ (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "")
+					+ "</TD></TR></TABLE>>];";
+		}
 		if (n.getKind() != null || n.getIdentifier().equals("start")) {
 			if (n.getDetour() != null && n.getDetour().size() > 0) {
 				for (TaskDefinitionDetour dd : (List<TaskDefinitionDetour>) n.getDetour()) {

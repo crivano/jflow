@@ -10,4 +10,6 @@ public interface TaskKind {
 	
 	String getGraphKind();
 
+	String getGraphTitle();
+
 }

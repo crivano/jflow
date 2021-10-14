@@ -43,4 +43,9 @@ public enum TaskKindSupport implements TaskKind {
 	public String getGraphKind() {
 		return this.graphKind;
 	}
+
+	@Override
+	public String getGraphTitle() {
+		return null;
+	}
 }
