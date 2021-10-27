@@ -15,4 +15,6 @@ public interface Engine<PI extends ProcessInstance<?, ?, ?>, R extends Responsib
 
 	TaskResult execute(PI pi, Integer from, int to) throws Exception;
 
+	TaskResult resume(PI pi) throws Exception;
+
 }

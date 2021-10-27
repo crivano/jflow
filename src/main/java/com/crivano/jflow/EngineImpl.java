@@ -32,6 +32,7 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 		resume(pi, r);
 	}
 
+	// Resume from a user event
 	@Override
 	public int resume(String event, Integer detourIndex, Map<String, Object> param) throws Exception {
 		List<PI> l = getDao().listByEvent(event);
@@ -56,11 +57,11 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 		return i;
 	}
 
+	// Process other tasks after the current task has finished
 	public TaskResult resume(PI pi, TaskResult result) throws Exception {
 		switch (result.getKind()) {
 		case ERROR: {
 			TD td = pi.getCurrentTaskDefinition();
-			// Should we retry after sometime?
 			if (result.getError() != null)
 				throw new Exception("error processing task " + td.toString(), result.getError());
 			else
@@ -101,6 +102,19 @@ public class EngineImpl<PD extends ProcessDefinition<TD>, TD extends TaskDefinit
 		return result;
 	}
 
+	// Retry current task, typically in case of a previous error
+	@Override
+	public TaskResult resume(PI pi) throws Exception {
+		if (pi.getStatus() != ProcessInstanceStatus.RESUMING)
+			return null;
+		TD td = pi.getCurrentTaskDefinition();
+		Class<? extends Task> clazz = td.getKind().getClazz();
+		Task ti = (Task) clazz.newInstance();
+		TaskResult r = ti.execute(td, pi, this);
+		return resume(pi, r);
+	}
+
+	// Force a jump from one task to another
 	@Override
 	public TaskResult execute(PI pi, Integer from, int to) throws Exception {
 		pi.resume();

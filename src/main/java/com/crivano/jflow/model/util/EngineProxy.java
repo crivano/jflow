@@ -48,4 +48,11 @@ public class EngineProxy implements Engine {
 		return delegate.execute(pi, from, to);
 	}
 
+	@Override
+	public TaskResult resume(ProcessInstance pi) throws Exception {
+		if (delegate == null)
+			return null;
+		return delegate.resume(pi);
+	}
+
 }
