@@ -13,18 +13,10 @@ import com.crivano.jflow.support.TaskDefinitionSupport;
 
 public class GraphViz {
 	private static String graphElement(String shape, String color, TaskDefinition n, String resp) {
-		String tooltip = "";
-		if(resp != null) {
-			String[] respInfo = resp.split(";;");
-			
-			if(respInfo.length >= 1) { 
-				resp = respInfo[0];
-				tooltip = "[tooltip=\"" + respInfo[1] + "\"]";
-			}
-		}
+		String tooltip = n.getTooltip();
 		
-		
-		String s = "\"" + n.getIdentifier() + "\"" + tooltip + "[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\""
+		String s = "\"" + n.getIdentifier() + "\"" + (tooltip != null ? "[tooltip=\"" +tooltip + "\"]" : "")
+				+ "[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\""
 				+ color + "\"][label=<"
 				+ (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null
 						? "<font point-size=\"10pt\">" + n.getKind().getGraphTitle() + "</font><br/>"
@@ -32,7 +24,8 @@ public class GraphViz {
 				+ n.getTitle() + (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "") + ">];";
 		if (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null && "rectangle".equals(shape)) {
 			shape = "plaintext";
-			s = "\"" + n.getIdentifier() + "\"" + tooltip + "[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\"" + color
+			s = "\"" + n.getIdentifier() + "\"" + (tooltip != null ? "[tooltip=\"" +tooltip + "\"]" : "")
+					+ "[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\"" + color
 					+ "\"][label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">"
 					+ (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null
 							? "<TR><TD><font point-size=\"10pt\">" + n.getKind().getGraphTitle() + "</font></TD></TR>"
@@ -79,6 +72,8 @@ public class GraphViz {
 
 			for (int i = 0; i < wf.getTaskDefinition().size(); i++) {
 				TaskDefinition n = (TaskDefinition) wf.getTaskDefinition().get(i);
+				n.setProcessInstance(pi);
+				
 				Responsible responsible = pi.calcResponsible(n);
 				String resp = responsible != null ? responsible.getInitials() : null;
 				s += graphElement(n.getKind().getGraphKind(),

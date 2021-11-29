@@ -2,6 +2,7 @@ package com.crivano.jflow.support;
 
 import java.util.List;
 
+import com.crivano.jflow.model.ProcessInstance;
 import com.crivano.jflow.model.TaskDefinition;
 
 public class TaskDefinitionSupport
@@ -92,6 +93,16 @@ public class TaskDefinitionSupport
 	@Override
 	public String getResponsibleDescription() {
 		return null;
+	}
+
+	@Override
+	public String getTooltip() {
+		return null;
+	}
+
+	@Override
+	public void setProcessInstance(ProcessInstance pi) {
+		
 	}
 
 }
