@@ -12,8 +12,9 @@ import com.crivano.jflow.support.DetourSupport;
 import com.crivano.jflow.support.TaskDefinitionSupport;
 
 public class GraphViz {
-	private static String graphElement(String shape, String color, TaskDefinition n, String resp) {
-		String s = "\"" + n.getIdentifier() + "\"[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\""
+	private static String graphElement(String shape, String color, TaskDefinition n, String resp, String tooltip) {
+		String s = "\"" + n.getIdentifier() + "\"" + (tooltip != null ? "[tooltip=\"" + tooltip + "\"]" : "" ) 
+				+ "[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\""
 				+ color + "\"][label=<"
 				+ (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null
 						? "<font point-size=\"10pt\">" + n.getKind().getGraphTitle() + "</font><br/>"
@@ -21,7 +22,8 @@ public class GraphViz {
 				+ n.getTitle() + (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "") + ">];";
 		if (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null && "rectangle".equals(shape)) {
 			shape = "plaintext";
-			s = "\"" + n.getIdentifier() + "\"[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\"" + color
+			s = "\"" + n.getIdentifier() + "\"" + (tooltip != null ? "[tooltip=\"" + tooltip + "\"]" : "" ) 
+					+ "[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\"" + color
 					+ "\"][label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">"
 					+ (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null
 							? "<TR><TD><font point-size=\"10pt\">" + n.getKind().getGraphTitle() + "</font></TD></TR>"
@@ -62,16 +64,17 @@ public class GraphViz {
 			s += graphElement("oval", "black",
 					new TaskDefinitionSupport("start", null, labelStart, null, null, null, desvios, null, null) {
 
-					}, null);
+					}, null, null);
 			s += graphElement("oval", pi.getCurrentIndex() == null ? "blue" : "black",
-					new TaskDefinitionSupport("finish", null, labelFinish, null, null, null, null, null, null), null);
+					new TaskDefinitionSupport("finish", null, labelFinish, null, null, null, null, null, null), null, null);
 
 			for (int i = 0; i < wf.getTaskDefinition().size(); i++) {
 				TaskDefinition n = (TaskDefinition) wf.getTaskDefinition().get(i);
 				Responsible responsible = pi.calcResponsible(n);
 				String resp = responsible != null ? responsible.getInitials() : null;
+				String tooltip = responsible != null ? responsible.getTooltip() : null;
 				s += graphElement(n.getKind().getGraphKind(),
-						(pi.getCurrentIndex() != null && pi.getCurrentIndex() == i) ? "blue" : "black", n, resp);
+						(pi.getCurrentIndex() != null && pi.getCurrentIndex() == i) ? "blue" : "black", n, resp, tooltip);
 			}
 		}
 		// s += "}";
@@ -88,13 +91,13 @@ public class GraphViz {
 			s += graphElement("oval", "black",
 					new TaskDefinitionSupport("start", null, labelStart, null, null, null, desvios, null, null) {
 
-					}, null);
+					}, null, null);
 			s += graphElement("oval", "black",
-					new TaskDefinitionSupport("finish", null, labelFinish, null, null, null, null, null, null), null);
+					new TaskDefinitionSupport("finish", null, labelFinish, null, null, null, null, null, null), null, null);
 
 			for (int i = 0; i < wf.getTaskDefinition().size(); i++) {
 				TaskDefinition n = (TaskDefinition) wf.getTaskDefinition().get(i);
-				s += graphElement(n.getKind().getGraphKind(), "black", n, n.getResponsibleDescription());
+				s += graphElement(n.getKind().getGraphKind(), "black", n, n.getResponsibleDescription(), n.getTooltip());
 			}
 		}
 		// s += "}";

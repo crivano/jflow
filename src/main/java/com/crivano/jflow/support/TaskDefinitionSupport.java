@@ -94,4 +94,9 @@ public class TaskDefinitionSupport
 		return null;
 	}
 
+	@Override
+	public String getTooltip() {
+		return null;
+	}
+
 }

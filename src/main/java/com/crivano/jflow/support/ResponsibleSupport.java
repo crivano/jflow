@@ -19,4 +19,9 @@ public class ResponsibleSupport implements Responsible {
 	public String getEmail() {
 		return email;
 	}
+
+	@Override
+	public String getTooltip() {
+		return null;
+	}
 }
