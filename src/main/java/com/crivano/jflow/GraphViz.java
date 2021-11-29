@@ -13,7 +13,18 @@ import com.crivano.jflow.support.TaskDefinitionSupport;
 
 public class GraphViz {
 	private static String graphElement(String shape, String color, TaskDefinition n, String resp) {
-		String s = "\"" + n.getIdentifier() + "\"[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\""
+		String tooltip = "";
+		if(resp != null) {
+			String[] respInfo = resp.split(";;");
+			
+			if(respInfo.length >= 1) { 
+				resp = respInfo[0];
+				tooltip = "[tooltip=\"" + respInfo[1] + "\"]";
+			}
+		}
+		
+		
+		String s = "\"" + n.getIdentifier() + "\"" + tooltip + "[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\""
 				+ color + "\"][label=<"
 				+ (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null
 						? "<font point-size=\"10pt\">" + n.getKind().getGraphTitle() + "</font><br/>"
@@ -21,7 +32,7 @@ public class GraphViz {
 				+ n.getTitle() + (resp != null ? "<br/><font point-size=\"10pt\">" + resp + "</font>" : "") + ">];";
 		if (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null && "rectangle".equals(shape)) {
 			shape = "plaintext";
-			s = "\"" + n.getIdentifier() + "\"[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\"" + color
+			s = "\"" + n.getIdentifier() + "\"" + tooltip + "[shape=\"" + shape + "\"][color=\"" + color + "\"][fontcolor=\"" + color
 					+ "\"][label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">"
 					+ (n != null && n.getKind() != null && n.getKind().getGraphTitle() != null
 							? "<TR><TD><font point-size=\"10pt\">" + n.getKind().getGraphTitle() + "</font></TD></TR>"
@@ -51,7 +62,7 @@ public class GraphViz {
 		}
 		return s;
 	}
-
+	
 	public static String getDot(ProcessInstance pi, String labelStart, String labelFinish) {
 		ProcessDefinition wf = pi.getProcessDefinition();
 		String s = ""; // "digraph G { graph[size=\"3,3\"];";
